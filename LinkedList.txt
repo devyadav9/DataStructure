@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head;
+
+void Insert(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->next = NULL;
+    struct Node* temp = head;
+    if(head == NULL){
+        head = newNode;
+        printf("\nElement %d Inserted 1!!",newNode->data);
+        return;
+    }
+    while(temp->next != NULL){ 
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("\nElement %d Inserted !!",newNode->data);
+}
+
+void InsertAtNth(int value, int n){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->next = NULL;
+    if(n == 1){
+        newNode->next = head;
+        head = newNode;
+        printf("\nElement %d Inserted at 1st position", newNode->data);
+        return; 
+    }
+    struct Node* temp = head;
+    for(int i = 0; i < n-2 ; ++i){
+        temp = temp->next;
+    }
+      newNode->next = temp->next; 
+      temp->next = newNode;
+      printf("\nElement %d Inserted at %dth position", newNode->data, n);
+}
+
+void Print(){
+    struct Node* temp = head;
+    printf("\nLinked List : ");
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+void Delete(int value){
+    struct Node* temp = head;
+    if(temp->data == value){
+        head = temp->next;
+        temp->next = NULL;
+        printf("\nElement %d Deleted !!",temp->data);
+        free(temp);
+        return;
+    }
+    struct Node* temp1 = temp->next;
+    while(temp1 != NULL){
+        if(temp1->data == value){
+            temp->next = temp1->next;
+            temp1->next = NULL;
+            printf("\nElement %d Deleted !!",temp1->data);
+            free(temp1);
+            break;
+        }
+        temp = temp1;
+        temp1 = temp->next;
+    }
+}
+
+int main()
+{
+    head = NULL;
+    printf("Linked List : Created!");
+    Insert(4);
+    Insert(7);
+    Insert(3);
+    Print();
+    InsertAtNth(6, 2);
+    Print();
+    InsertAtNth(9, 1);
+    Print();
+    InsertAtNth(2, 6);
+    Print();
+    return 0;
+}
