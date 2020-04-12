@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head;
+
+void Insert(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->next = NULL;
+    struct Node* temp = head;
+    if(head == NULL){
+        head = newNode;
+        printf("\nElement %d Inserted 1!!",newNode->data);
+        return;
+    }
+    while(temp->next != NULL){ 
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("\nElement %d Inserted !!",newNode->data);
+}
+
+void Print(){
+    struct Node* temp = head;
+    printf("\nLinked List : ");
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+void Reverse(){
+    struct Node *current, *next, *prev;
+    current = head;
+    prev = NULL;
+    while(current != NULL){
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
+}
+
+
+int main()
+{
+    head = NULL;
+    printf("Linked List : Created!");
+    Insert(4);
+    Insert(7);
+    Insert(3);
+    Print();
+    printf("\nAfter Reversing a Linked List : ");
+    Reverse();
+    Print();
+    return 0;
+}
