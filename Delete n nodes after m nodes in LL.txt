@@ -49,7 +49,9 @@ void Delete(int m, int n){
                 if(current != NULL){
                 next = current->next;
                 prev->next = next;
-                current->next = NULL;
+                struct Node* del = current;
+                del->next = NULL;
+                free(del);
                 current = next;
                 ++i;
                 }
@@ -74,9 +76,8 @@ int main()
     Insert(8);
     Insert(3);
     Insert(6);
-    Insert(7);
     Print();
-    Delete(1, 5);
+    Delete(3, 3);
     Print();
     return 0;
 }
