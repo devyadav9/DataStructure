@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head;
+
+void Insert(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->next = NULL;
+    struct Node* temp = head;
+    if(head == NULL){
+        head = newNode;
+        printf("\nElement %d Inserted 1!!",newNode->data);
+        return;
+    }
+    while(temp->next != NULL){ 
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("\nElement %d Inserted !!",newNode->data);
+}
+
+void Print(){
+    struct Node* temp = head;
+    printf("\nLinked List : ");
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+int FindMid(){
+    int count = 0;
+    struct Node* mid = head;
+    struct Node* temp1 = head;
+    while(temp1 != NULL){
+        if(count%2 != 0){
+            mid = mid->next;
+        }
+        temp1 = temp1->next;
+        ++count;
+    }
+    return mid->data; 
+}
+
+
+int main()
+{
+    head = NULL;
+    printf("Linked List : Created!");
+    Insert(4);
+    Insert(7);
+    Insert(3);
+    Insert(8);
+    Insert(5);
+    Insert(2);
+    Insert(1);
+    Print();
+    printf("\nMid Element %d in Linked List :", FindMid());
+    return 0;
+}

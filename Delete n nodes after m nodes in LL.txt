@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head;
+
+void Insert(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->next = NULL;
+    struct Node* temp = head;
+    if(head == NULL){
+        head = newNode;
+        printf("\nElement %d Inserted 1!!",newNode->data);
+        return;
+    }
+    while(temp->next != NULL){ 
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("\nElement %d Inserted !!",newNode->data);
+}
+
+void Print(){
+    struct Node* temp = head;
+    printf("\nLinked List : ");
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+void Delete(int m, int n){
+    int count = 0;
+    struct Node *prev, *current, *next;
+    current = head;
+    prev = NULL;
+    while(current != NULL){
+        next = current->next;
+        prev = current;
+        current = next;
+        ++count;
+        if(count == m ){
+            int i = 0;
+            while( i < n ){
+                if(current != NULL){
+                next = current->next;
+                prev->next = next;
+                current->next = NULL;
+                current = next;
+                ++i;
+                }
+                else {
+                    break;
+                }
+            }
+            count = 0;
+        }
+    }
+}
+
+int main()
+{
+    head = NULL;
+    printf("Linked List : Created!");
+    Insert(4);
+    Insert(5);
+    Insert(2);
+    Insert(1);
+    Insert(9);
+    Insert(8);
+    Insert(3);
+    Insert(6);
+    Insert(7);
+    Print();
+    Delete(1, 5);
+    Print();
+    return 0;
+}
