@@ -33,33 +33,34 @@ void Print(){
     }
 }
 
-void Reverse(){
-    struct Node *current, *next, *prev;
+void Delete(int m, int n){
+    int count = 0;
+    struct Node *prev, *current, *next;
     current = head;
     prev = NULL;
     while(current != NULL){
         next = current->next;
-        current->next = prev;
         prev = current;
         current = next;
-    }
-    head = prev;
-}
-
-void AddOneInLL(){
-    int carry = 0;
-    struct Node* temp = head;
-    while(temp != NULL){
-        int value = temp->data + 1;
-        carry = value / 10;
-        if(carry == 0) {
-            temp->data = temp->data + 1;
-            break;
+        ++count;
+        if(count == m ){
+            int i = 0;
+            while( i < n ){
+                if(current != NULL){
+                next = current->next;
+                prev->next = next;
+                struct Node* del = current;
+                del->next = NULL;
+                free(del);
+		current = next;
+                ++i;
+                }
+                else {
+                    break;
+                }
+            }
+            count = 0;
         }
-        else {
-            temp->data = 0;
-        }
-        temp = temp->next;
     }
 }
 
@@ -68,17 +69,15 @@ int main()
     head = NULL;
     printf("Linked List : Created!");
     Insert(4);
+    Insert(5);
+    Insert(2);
+    Insert(1);
     Insert(9);
-    Insert(9);
+    Insert(8);
+    Insert(3);
+    Insert(6);
     Print();
-    printf("\nAfter reversing Linked List :");
-    Reverse();
-    Print();
-    printf("\nAfter adding one in Linked List :");
-    AddOneInLL();
-    Print();
-    Reverse();
-    printf("\nFinal result : ");
+    Delete(3, 3);
     Print();
     return 0;
 }
