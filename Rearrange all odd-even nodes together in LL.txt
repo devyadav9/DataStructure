@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head;
+
+void Insert(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->next = NULL;
+    struct Node* temp = head;
+    if(head == NULL){
+        head = newNode;
+        printf("\nElement %d Inserted 1!!",newNode->data);
+        return;
+    }
+    while(temp->next != NULL){ 
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("\nElement %d Inserted !!",newNode->data);
+}
+
+void Print(){
+    struct Node* temp = head;
+    printf("\nLinked List : ");
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+void OddEven(){
+    struct Node* temp = head;
+    struct Node* temp1 = temp->next;
+    struct Node* even = temp1;
+    if(temp == NULL || temp->next == NULL || temp->next->next == NULL){
+        temp1->next = temp;
+        temp->next = NULL;
+        head = temp1;
+        return;
+    }
+    while(temp != NULL){
+        temp->next = temp1->next;
+        if(temp->next == NULL) break;
+        temp = temp->next; 
+        temp1->next = temp->next;
+        if(temp1->next == NULL) break;
+        temp1 = temp1->next;
+    }
+    temp->next = even;
+}
+
+int main()
+{
+    head = NULL;
+    printf("Linked List : Created!");
+    Insert(1);
+    Insert(2);
+    Insert(3);
+    Insert(4);
+    Insert(5);
+    Insert(6);
+    Print();
+    OddEven();
+    Print();
+    return 0;
+}
