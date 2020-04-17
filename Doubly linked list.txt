@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+struct Node* head;
+
+struct Node* GetNode(int x){
+    struct Node* temp = malloc(sizeof(struct Node*));
+    temp->data = x;
+    temp->prev = NULL;
+    temp->next = NULL;
+    return temp;
+}
+
+void Insert(int x){
+    struct Node* newNode = GetNode(x);
+    if(head == NULL){
+        head = newNode;
+        printf("Node Inserted At Head : %d\n", newNode->data);
+        return;
+    }
+    struct Node* temp = head;
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+    newNode->prev = temp;
+    temp->next = newNode;
+    printf("Node Inserted : %d", newNode->data);
+    printf("\n");
+}
+
+void InsertAtNth(int x, int n){
+    struct Node* newNode = GetNode(x);
+    struct Node* temp = head;
+    if(n == 1){
+        head->prev = newNode;
+        newNode->next = head;
+        head = newNode;
+        printf("Node Inserted At Head : %d\n", newNode->data);
+        return;
+    }
+    
+    for(int i = 1; i < n-1; ++i){
+        temp = temp->next;
+    }
+    
+    newNode->next = temp->next;
+    newNode->prev = temp;
+    temp->next = newNode;
+    printf("Node Inserted At %dth position : %d",n, newNode->data);
+    printf("\n");
+}
+
+void Print(){
+    struct Node* temp = head;
+    printf("Doubly Linked List :");
+    while(temp != NULL){
+        printf(" %d", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+void Delete(int data){
+    struct Node* temp = head;
+    if(temp == NULL) printf("Doubly linked list is empty..");
+    if(temp->data == data ){
+        head = temp->next;
+        printf("Element %d Deleted!", data);
+        free(temp);
+        return;
+    }
+    
+    while(temp->data != data){
+        if(temp->next == NULL) break;
+        temp = temp->next;
+    }
+    
+    //removing a last element in DLL
+    if(temp->next == NULL && temp->data == data){
+        temp->prev->next = NULL;
+        printf("Element %d Deleted!", data);
+        free(temp);
+    }
+    //removing element in between DLL
+    else if(temp->next != NULL ){
+        struct Node* temp1 = temp;
+        struct Node* temp2 = temp->prev;
+        struct Node* temp3 = temp->next;
+        temp2->next = temp3->prev = temp1->next;
+        printf("Element %d Deleted!", data);
+        free(temp1);
+    }
+    else printf("Element %d not present!", data);
+    printf("\n");
+}
+
+int main()
+{
+    printf("Doubly linked list : \n");
+    Insert(2);
+    Insert(5);
+    Insert(8);
+    Insert(6);
+    Insert(9);
+    Print();
+    InsertAtNth(3, 1);
+    Print();
+    Delete(1);
+    Print();
+    Delete(9);
+    Print();
+    return 0;
+}
