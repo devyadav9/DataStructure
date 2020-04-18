@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* top = NULL;
+
+void Push(int data){
+    struct Node* temp = malloc(sizeof(struct Node*));
+    temp->data = data;
+    temp->next = top;
+    printf("Element %d Inserted!", temp->data);
+    top = temp;
+    printf("\n");
+}
+
+void Pop(){
+    struct Node* temp = top;
+    if(top == NULL) return;
+    top = temp->next;
+    printf("Element %d Deleted!", temp->data);
+    free(temp);
+    printf("\n");
+}
+
+int Top(){
+    return top->data;
+}
+
+void Print(){
+    struct Node* temp = top;
+    printf("Stack : ");
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    printf("Stack Implemented : \n");
+    Push(5);
+    Push(4);
+    Push(2);
+    Push(1);
+    Print();
+    Pop();
+    Pop();
+    Print();
+    return 0;
+}
