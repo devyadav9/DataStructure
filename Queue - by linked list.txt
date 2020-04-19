@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* next;
+};
+
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+void Queue(int data){
+    struct Node* temp = malloc(sizeof(struct Node*));
+    temp->data = data;
+    temp->next = NULL;
+    
+    if(front == NULL && rear == NULL) {
+        front = rear = temp;
+        printf("Element %d Inserted!\n", temp->data);
+        return;
+    }
+    rear->next = temp;
+    rear = temp;
+    printf("Element %d Inserted!\n", temp->data);
+}
+
+void Dequeue(){
+    struct Node* temp = front;
+    if(front == NULL) return;
+    else if( front == rear) front = rear = NULL;
+    else front = front->next;
+    printf("Element %d Deleted!\n", temp->data);
+    free(temp);
+}
+
+void Print(){
+    printf("Queue : ");
+    for( struct Node* temp = front; temp != NULL; temp = temp->next){
+        printf(" %d", temp->data);    
+    }
+    printf("\n");
+}
+
+int main()
+{
+    printf("Queue Follows : First-In First-Out \n");
+    Queue(2);
+    Queue(4);
+    Queue(5);
+    Queue(7);
+    Dequeue();
+    Dequeue();
+    Print();
+    return 0;
+}
