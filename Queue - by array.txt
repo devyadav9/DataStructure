@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_SIZE 101
+int queue[MAX_SIZE];
+int rear = -1, front = -1;
+
+void Queue(int data){
+    if(MAX_SIZE-1 == front) return;
+    else if(rear == -1 && front == -1) front = rear = 0;
+    else rear = rear + 1;
+    queue[rear] = data;
+    printf("Element %d Inserted!\n", queue[rear]);
+}
+
+void Dequeue(){
+    if(rear == -1 && front == -1) return;
+    else if(front == rear) front = rear = -1;
+    else front = front + 1;
+    printf("Element %d Deleted!\n", queue[front-1]);
+}
+
+void Print(){
+    printf("Queue : ");
+    for(int i = front; i <= rear; ++i){
+    printf(" %d", queue[i]);    
+    }
+    printf("\n");
+}
+
+int main()
+{
+    printf("Queue Follows : First-In First-Out \n");
+    Queue(2);
+    Queue(4);
+    Queue(5);
+    Queue(7);
+    Dequeue();
+    Dequeue();
+    Print();
+    return 0;
+}
