@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* root = NULL;
+
+//create a newNode with a given value
+struct Node* GetNode(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+} 
+
+//insert a node in binary search tree
+struct Node* Insert(int data, struct Node* root){
+    if(root == NULL){
+        root = GetNode(data);
+        printf("Element %d Inserted!!\n", data);
+    }
+    else if(data <= root->data)
+        root->left = Insert(data, root->left);
+    else
+        root->right = Insert(data, root->right);
+        
+    return root;
+}
+
+//search value in binary search tree
+bool Search(int data, struct Node* root){
+    if(root == NULL) return false;
+    else if(root->data == data) return true;
+    else if(data <= root->data) return Search(data, root->left);
+    else return Search(data, root->left);
+}
+
+int main()
+{
+    printf("Binary Search Tree : \n");
+    root = Insert(5, root);
+    root = Insert(2, root);
+    root = Insert(8, root);
+    root = Insert(1, root);
+    root = Insert(3, root);
+    root = Insert(7, root);
+    root = Insert(10, root);
+    bool flag = Search(1, root);
+    //we dont have format specifier for bool in c therefore we used ternary operator.
+    printf("Element 1 is present in BST : %s", flag ? "true" : "false");
+    return 0;
+}
