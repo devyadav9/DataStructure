@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* root = NULL;
+
+//create a newNode with a given value
+struct Node* GetNode(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+} 
+
+//insert a node in binary search tree
+struct Node* Insert(int data, struct Node* root){
+    if(root == NULL){
+        root = GetNode(data);
+        printf("Element %d Inserted!!\n", data);
+    }
+    else if(data <= root->data)
+        root->left = Insert(data, root->left);
+    else
+        root->right = Insert(data, root->right);
+        
+    return root;
+}
+
+//binary searh traversal can be done in two ways : depth first and breadth first
+//in depth first, we have three ways : preorder, inorder and postorder
+//let's start :
+void Preorder(struct Node* root){
+    if(root == NULL) return;
+    printf(" %d", root->data);
+    Preorder(root->left);
+    Preorder(root->right);
+}
+
+void Inorder(struct Node* root){
+    if(root == NULL) return;
+    Inorder(root->left);
+    printf(" %d", root->data);
+    Inorder(root->right);
+}
+
+void Postorder(struct Node* root){
+    if(root == NULL) return;
+    Postorder(root->left);
+    Postorder(root->right);
+    printf(" %d", root->data);
+}
+
+int main()
+{
+    printf("Binary Search Tree : \n");
+    root = Insert(5, root);
+    root = Insert(2, root);
+    root = Insert(8, root);
+    root = Insert(1, root);
+    root = Insert(3, root);
+    root = Insert(7, root);
+    root = Insert(10, root);
+    printf("BST :");
+    Preorder(root);
+    printf("\n");
+    printf("BST :");
+    Inorder(root);
+    printf("\n");
+    printf("BST :");
+    Postorder(root);
+    return 0;
+}
