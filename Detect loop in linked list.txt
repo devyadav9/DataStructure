@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head;
+
+void Insert(int value){
+    struct Node* newNode = malloc(sizeof(struct Node*));
+    newNode->data = value;
+    newNode->next = NULL;
+    struct Node* temp = head;
+    if(head == NULL){
+        head = newNode;
+        printf("\nElement %d Inserted 1!!",newNode->data);
+        return;
+    }
+    while(temp->next != NULL){ 
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("\nElement %d Inserted !!",newNode->data);
+}
+
+//detecting a loop in linked list by floyd cycle finding algorithm.
+bool IsCycle(struct Node* head){
+    struct Node* slow = head;
+    struct Node* fast = head;
+    while(slow && fast && fast->next){
+	slow = slow->next;
+        fast = fast->next->next;
+        if(fast == slow) return true;
+    }
+    return false;
+}
+
+void Print(){
+    struct Node* temp = head;
+    printf("\nLinked List : ");
+    do{
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }while(temp != head);
+}
+
+
+//to creating a loop in linked list
+void CreateLoop(struct Node* head){
+    struct Node* temp = head;
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+    temp->next = head->next;
+}
+
+
+int main()
+{
+    head = NULL;
+    printf("Linked List : Created!");
+    Insert(4);
+    Insert(7);
+    Insert(3);
+    Insert(1);
+    Insert(8);
+    Insert(9);
+    CreateLoop(head);
+    // Print();
+    bool flag = IsCycle(head);
+    printf("\nLinked List : Having Loop - %s", flag ? "true" : "false");
+    return 0;
+}
