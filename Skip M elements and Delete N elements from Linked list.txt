@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+	int data;
+	struct Node *next;
+};
+
+struct Node *head;
+
+void Insert(int value) {
+	struct Node *newNode = (struct Node*) malloc(sizeof(struct Node));
+	newNode->data = value;
+	newNode->next = NULL;
+	struct Node *temp = head;
+	if (head == NULL) {
+		head = newNode;
+		printf("\nElement %d Inserted 1!!", newNode->data);
+		return;
+	}
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+	temp->next = newNode;
+	printf("\nElement %d Inserted !!", newNode->data);
+}
+
+void Print() {
+	struct Node *temp = head;
+	printf("\nLinked List : ");
+	while (temp != NULL) {
+		printf("%d ", temp->data);
+		temp = temp->next;
+	}
+}
+
+void Skip_M_Delete_N(int m, int n){
+	struct Node *current, *Next;
+	current = head;
+	int count;
+	while(current){
+
+	for(count = 1; count < m && current != NULL; ++count )  { current = current->next;}
+
+		if(current ==  NULL) return;
+
+		Next = current->next;
+
+		for (count = 1; count<=n && Next != NULL; ++count){
+		            struct Node *temp = Next;
+		            Next = Next->next;
+		            free(temp);
+		}
+		current->next = Next;
+
+		current = Next;
+	}
+}
+
+void Delete(int value) {
+	struct Node *temp = head;
+	if (temp->data == value) {
+		head = temp->next;
+		temp->next = NULL;
+		printf("\nElement %d Deleted !!", temp->data);
+		free(temp);
+		return;
+	}
+	struct Node *temp1 = temp->next;
+	while (temp1 != NULL) {
+		if (temp1->data == value) {
+			temp->next = temp1->next;
+			temp1->next = NULL;
+			printf("\nElement %d Deleted !!", temp1->data);
+			free(temp1);
+			break;
+		}
+		temp = temp1;
+		temp1 = temp->next;
+	}
+}
+
+int main() {
+	head = NULL;
+	printf("Linked List : Created!");
+	Insert(5);
+	Insert(4);
+	Insert(2);
+	Insert(1);
+	Insert(3);
+	Insert(6);
+	Print();
+	Skip_M_Delete_N(2, 1);
+	Print();
+	return 0;
+}
