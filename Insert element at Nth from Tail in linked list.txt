@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+	int data;
+	struct Node *next;
+};
+
+struct Node *head;
+
+void Insert(int value) {
+	struct Node *newNode = (struct Node*) malloc(sizeof(struct Node));
+	newNode->data = value;
+	newNode->next = NULL;
+	struct Node *temp = head;
+	if (head == NULL) {
+		head = newNode;
+		printf("\nElement %d Inserted 1!!", newNode->data);
+		return;
+	}
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+	temp->next = newNode;
+	printf("\nElement %d Inserted !!", newNode->data);
+}
+
+void InsertAtNth(int value, int n) {
+	struct Node *newNode = (struct Node*) malloc(sizeof(struct Node));
+	newNode->data = value;
+	newNode->next = NULL;
+	if (n == 1) {
+		newNode->next = head;
+		head = newNode;
+		printf("\nElement %d Inserted at 1st position", newNode->data);
+		return;
+	}
+	struct Node *temp = head;
+	for (int i = 0; i < n - 2; ++i) {
+		temp = temp->next;
+	}
+	newNode->next = temp->next;
+	temp->next = newNode;
+	printf("\nElement %d Inserted at %dth position", newNode->data, n);
+}
+
+void InsertAtNthFromEnd(int n, int data) {
+	struct Node *newNode = (struct Node*) malloc(sizeof(struct Node));
+	newNode->data = data;
+	newNode->next = NULL;
+
+	struct Node *temp = head;
+	struct Node *temp1 = head;
+	int length = 0;
+	while(temp != NULL){
+		temp = temp->next;
+		++length;
+	}
+	if(length > n || length == n-1){
+		if(length > n){
+			for(int i = 1; i < length-n+1; ++i){
+				temp1 = temp1->next;
+				}
+				newNode->next = temp1->next;
+				temp1->next = newNode;
+		}
+		else {
+			newNode->next = head;
+			head = newNode;
+		}
+		printf("\nElement %d Inserted At %dth Position From Tail!!", data, n);
+	}
+	else {
+		printf("\nInvalid Position !!");
+	}
+}
+
+
+void Print() {
+	struct Node *temp = head;
+	printf("\nLinked List : ");
+	while (temp != NULL) {
+		printf("%d ", temp->data);
+		temp = temp->next;
+	}
+}
+
+void Delete(int value) {
+	struct Node *temp = head;
+	if (temp->data == value) {
+		head = temp->next;
+		temp->next = NULL;
+		printf("\nElement %d Deleted !!", temp->data);
+		free(temp);
+		return;
+	}
+	struct Node *temp1 = temp->next;
+	while (temp1 != NULL) {
+		if (temp1->data == value) {
+			temp->next = temp1->next;
+			temp1->next = NULL;
+			printf("\nElement %d Deleted !!", temp1->data);
+			free(temp1);
+			break;
+		}
+		temp = temp1;
+		temp1 = temp->next;
+	}
+}
+
+int main() {
+	head = NULL;
+	printf("Linked List : Created!");
+	Insert(5);
+	Insert(4);
+	Insert(2);
+	Insert(1);
+	Print();
+	InsertAtNthFromEnd(3, 2);
+	Print();
+	return 0;
+}

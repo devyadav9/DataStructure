@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+	int data;
+	struct Node *next;
+};
+
+struct Node *head;
+
+void Insert(int value) {
+	struct Node *newNode = (struct Node*) malloc(sizeof(struct Node));
+	newNode->data = value;
+	newNode->next = NULL;
+	struct Node *temp = head;
+	if (head == NULL) {
+		head = newNode;
+		printf("\nElement %d Inserted 1!!", newNode->data);
+		return;
+	}
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+	temp->next = newNode;
+	printf("\nElement %d Inserted !!", newNode->data);
+}
+
+void RemoveDuplicatesInSortedArray(){
+		struct Node* current = head;
+	  	struct Node* next_next;
+
+	    if (current == NULL)
+	    return;
+
+	    while (current->next != NULL) {
+	    if (current->data == current->next->data)
+	    {
+	        next_next = current->next->next;
+	        free(current->next);
+	        current->next = next_next;
+	    }
+	    else current = current->next;
+	}
+}
+
+void Print() {
+	struct Node *temp = head;
+	printf("\nLinked List : ");
+	while (temp != NULL) {
+		printf("%d ", temp->data);
+		temp = temp->next;
+	}
+}
+
+void Delete(int value) {
+	struct Node *temp = head;
+	if (temp->data == value) {
+		head = temp->next;
+		temp->next = NULL;
+		printf("\nElement %d Deleted !!", temp->data);
+		free(temp);
+		return;
+	}
+	struct Node *temp1 = temp->next;
+	while (temp1 != NULL) {
+		if (temp1->data == value) {
+			temp->next = temp1->next;
+			temp1->next = NULL;
+			printf("\nElement %d Deleted !!", temp1->data);
+			free(temp1);
+			break;
+		}
+		temp = temp1;
+		temp1 = temp->next;
+	}
+}
+
+int main() {
+	head = NULL;
+	printf("Linked List : Created!");
+	Insert(1);
+	Insert(2);
+	Insert(2);
+	Insert(3);
+	Print();
+	RemoveDuplicatesInSortedArray();
+	Print();
+	return 0;
+}
